@@ -1,0 +1,69 @@
+<html>
+<head></head>
+<body>
+<textarea id="original" style="width:100%;height:150px"></textarea>
+<textarea id="modified" style="width:100%;height:150px"></textarea>
+<button onclick="convert()">Click</button>
+<div id="text" style="color:black">
+</div>
+</body>
+</html>
+<script>
+function convert(){
+	var text1 = document.getElementById('original').value.replace(/\n/g, '<br>\n');;
+	var text2 = document.getElementById('modified').value.replace(/\n/g, '<br>\n');;
+	/*
+var text1 = "Receiving Party's obligations under this Agreement do not extend to information that is: (a) publicly known at the time of disclosure or subsequently becomes publicly known through no fault of the Receiving Party; (b) discovered or created by the Receiving Party before disclosure by Disclosing Party; (c) learned by the Receiving Party through legitimate means other than from the Disclosing Party or Disclosing Party's representatives; or (d) is disclosed by Receiving Party with Disclosing Party's prior written approval.";
+var text2 = "Receiving Party's obligations under this Agreement do not extend to information that is: (a) publicly known at the time of disclosure or subsequently becomes publicly known through no fault of the Disclosing Party; (b) discovered or created by the Receiving Party before disclosure by Disclosing Party; (c) learned by the Receiving Party through legitimate means other than from the Disclosing Party or Disclosing Party's representatives; or (d) is disclosed by Receiving Party with Disclosing Party's post written approval.";*/
+var arr1 = text1.split(' ');
+var arr2 = text2.split(' ');
+var final_string = '';
+var pivot1=0;
+var pivot2 =0;
+while(pivot1<arr1.length){
+	if(arr1[pivot1] == arr2[pivot2]){
+		final_string+=arr1[pivot1]+' ';
+		pivot1++;
+		pivot2++;	
+	}
+	else{
+		var j = pivot2+1;
+		var added_string = arr2[pivot2]+" ";
+		var flag = false;
+				while((arr2[j] != arr1[pivot1]))
+				{
+					if(arr2[j] == arr1[pivot1+1])
+					{
+						flag = true;
+						break;
+					}
+					added_string+=arr2[j]+" ";
+					j++;
+						if(j>=arr2.length)
+							break;
+				}
+					if(flag){
+			final_string+="<strike style='color:red;'>"+arr1[pivot1]+"</strike>"+" "+"<span style='color:green;'>"+added_string+"</span>"+" ";
+			pivot1++;
+			pivot2 = j;
+					}
+		else if(j<arr2.length){
+			final_string+="<span style='color:green;'>"+added_string+"</span>"+arr1[pivot1]+" ";
+			pivot1++;
+			pivot2 = j+1;
+		}	
+	else{
+			final_string+="<strike style='color:red;'>"+arr1[pivot1]+"</strike>"+" ";
+			pivot1++;
+	}	
+	}
+}
+if(pivot1 >=arr1.length){
+			for(var k=pivot2;k<arr2.length;k++){
+				final_string+="<span style='color:green'>"+arr2[k]+"</span>"+" ";
+			}
+			
+		}
+document.getElementById('text').innerHTML = '<p>'+final_string.trim()+'</p>';
+}
+</script>
