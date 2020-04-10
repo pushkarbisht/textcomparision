@@ -10,221 +10,257 @@
 </html>
 <script>
 function convert(){
-	var text1 = document.getElementById('original').value.replace(/\n/g, '<br>\n');;
-	var text2 = document.getElementById('modified').value.replace(/\n/g, '<br>\n');;
+	/*var text1 = document.getElementById('original').value.replace(/\n/g, '<br>\n').trim();
+	var text2 = document.getElementById('modified').value.replace(/\n/g, '<br>\n').trim();*/
 
-
+	var text1 = document.getElementById('original').value.trim();
+    var text2 = document.getElementById('modified').value.trim();
+    console.log(text1.charAt(10));
 
 	var arr1 = [];
 var arr2 = [];
-var special_characters = [',','.','?','"',' '];
-var current_special_char = '';
-var single_word = '';
-var start_fresh_word = false;
 
-for(var i=0;i<text1.length;i++){	
-		if(special_characters.includes(text1.charAt(i)) && current_special_char != text1.charAt(i)){
-			start_fresh_word = true;
-			current_special_char = text1.charAt(i);
-		}
-		else if(current_special_char  == text1.charAt(i)){
-			start_fresh_word = false;
-		}
-		else if(current_special_char == text1.charAt(i)){
-			start_fresh_word = false;
-		}
-		else if(special_characters.includes(text1.charAt(i))){
-			start_fresh_word = true;
-			current_special_char = text1.charAt(i);
-		}
-		else if(current_special_char != ''){
-			start_fresh_word = true;
-			current_special_char='';
-		}
-		else
-			start_fresh_word = false;
-  if(start_fresh_word){
-	  if(single_word.length>0)
-		arr1.push(single_word);
-	single_word = text1.charAt(i);
-  }
-  else{
-    single_word+=text1.charAt(i);
-  }
-}
-if(single_word.length>0)
-		arr1.push(single_word);
+var splittedString1 = text1.split(/(\s+|\.+\s*|\?+\s*|\,+\s*|\"+\s*|\n+)/);
+var splittedString2 = text2.split(/(\s+|\.+\s*|\?+\s*|\,+\s*|\"+\s*|\n+)/);
+
+var newArr1 = splittedString1.map((currentValue, index, arr)=>{
+    if(currentValue.trim() == '' && currentValue != '\n')
+    return null;
+    if(index == arr.length-1){
+        return currentValue;
+    }
+    else{
+        if(arr[index+1].trim() == '' && arr[index+1] != '\n'){
+        return currentValue+arr[index+1];
+        }
+        else{
+        return currentValue;
+        }
+    }
+   
+   
+});
+var newArr2 = splittedString2.map((currentValue, index, arr)=>{
+    
+    
+    if(currentValue.trim() == '' && currentValue != '\n')
+    return null;
+    if(index == arr.length-1){
+        return currentValue
+    } 
+    else{
+        if(arr[index+1].trim() == '' && arr[index+1] != '\n'){
+        return currentValue+arr[index+1];
+    }
+    else{
+        return currentValue;
+    }
+    }
+    
+});
+console.log(newArr1);
+
+arr1  = newArr1.filter( function(e) { return e!=null; } );
+arr2 = newArr2.filter( function(e) { return e!=null; } );
 console.log(arr1);
-
-
-
-
-
- current_special_char = '';
- single_word = '';
- start_fresh_word = false;
-
-for(var i=0;i<text2.length;i++){	
-		if(special_characters.includes(text2.charAt(i)) && current_special_char != text2.charAt(i)){
-			start_fresh_word = true;
-			current_special_char = text2.charAt(i);
-		}
-		else if(current_special_char  == text2.charAt(i)){
-			start_fresh_word = false;
-		}
-		else if(current_special_char == text2.charAt(i)){
-			start_fresh_word = false;
-		}
-		else if(special_characters.includes(text2.charAt(i))){
-			start_fresh_word = true;
-			current_special_char = text2.charAt(i);
-		}
-		else if(current_special_char != ''){
-			start_fresh_word = true;
-			current_special_char='';
-		}
-		else
-			start_fresh_word = false;
-  if(start_fresh_word){
-	  if(single_word.length>0)
-		arr2.push(single_word);
-	single_word = text2.charAt(i);
-  }
-  else{
-    single_word+=text2.charAt(i);
-  }
-}
-if(single_word.length>0)
-		arr2.push(single_word);
 console.log(arr2);
-
-
-
-
 
 var final_string = '';
 var pivot1 =0;
 var pivot2 =0;
-while(pivot1<arr1.length && pivot2<arr2.length){
+
+while(true){
+  //  if(arr1.length == 1)
+    if(pivot1>=arr1.length){
+        if(pivot2<arr2.length)
+        final_string+="<pre style='background-color:green;'>"+arr2.slice(pivot2, arr2.length).join("")+"</pre>";
+        break;
+    }
+    if(pivot2>=arr2.length){
+        if(pivot1<arr1.length)
+        final_string+="<pre style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</pre>";
+        break;
+    }
 	if(arr1[pivot1] == arr2[pivot2]){
 		final_string+=arr1[pivot1];
 		pivot1++;
 		pivot2++;	
 	}
 	else{
-		var word1;
-		var word2;
-		if(false){
-		//if((arr1[pivot1].charAt(arr1[pivot1].length-1) == '.' || arr2[pivot2].charAt(arr2[pivot2].length-1) == '.')){
-			/*	if(arr1[pivot1].charAt(arr1[pivot1].length-1) == '.'){
-					if(arr1[pivot1].slice(0, -1) == arr2[pivot2]){
-						final_string+=arr1[pivot1].slice(0, -1)+" ";
-						pivot2++;
-						var string_added = "";
-						while(arr2[pivot2].charAt(arr2[pivot2].length-1) !='.'){
-							string_added += arr2[pivot2]+" ";
-							pivot2++;
-						}
-						string_added += arr2[pivot2].slice(0, -1);
-						final_string += "<span style='color:green;'>"+string_added+"</span>"+"."+" ";
-						pivot1++;
-						pivot2++;						
-					}
-					else{
-						final_string+="<strike style='color:red;'>"+arr1[pivot1].slice(0, -1)+"</strike>"+" ";
-						var string_added = "";
-						while(arr2[pivot2].charAt(arr2[pivot2].length-1) !='.'){
-							string_added += arr2[pivot2]+" ";
-							pivot2++;
-						}
-						string_added += arr2[pivot2].slice(0, -1);
-						final_string += "<span style='color:green;'>"+string_added+"</span>"+"."+" ";
-						pivot1++;
-						pivot2++;
-						
-					}
-				} 
-				
-				else if(arr2[pivot2].charAt(arr2[pivot2].length-1) == '.'){
-					
-					if(arr2[pivot2].slice(0, -1) == arr1[pivot1]){
-						final_string+=arr2[pivot2].slice(0, -1)+" ";
-						pivot1++;
-						var string_deleted = "";
-						while(arr1[pivot1].charAt(arr1[pivot1].length-1) !='.'){
-							string_deleted += arr1[pivot1]+" ";
-							pivot1++;
-						}
-						string_deleted += arr1[pivot1].slice(0, -1);
-						final_string += "<strike style='color:red;'>"+string_deleted+"</strike>"+"."+" ";
-						pivot1++;
-						pivot2++;						
-					}
-					else{
-						final_string+="<span style='color:green;'>"+arr2[pivot2].slice(0, -1)+"</span>"+" ";
-						var string_deleted = "";
-						while(arr1[pivot1].charAt(arr1[pivot1].length-1) !='.'){
-							string_deleted += arr1[pivot1]+" ";
-							pivot1++;
-						}
-						string_deleted += arr1[pivot1].slice(0, -1);
-						final_string += "<strike style='color:red;'>"+string_deleted+"</span>"+"."+" ";
-						pivot1++;
-						pivot2++;
-						
-					}
-				} */
-		}
-		
-		else
-		{
-		var j = pivot2+1;
-		var added_string = arr2[pivot2];
-		var flag = false;
-				while((arr2[j] != arr1[pivot1]))
+        if(arr1[pivot1].trim() == arr2[pivot2].trim()){
+            var space1 = arr1[pivot1].length - arr1[pivot1].trim().length;
+            var space2 = arr2[pivot2].length - arr2[pivot2].trim().length;
+            var space = "";
+            if(space1 > space2){
+                final_string+=arr2[pivot2];
+                for(var i =0;i<space1 - space2;i++)
+                space+=" ";
+                final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+            }
+            else{
+                final_string+=arr1[pivot1];
+                for(var i =0;i<space2 - space1;i++)
+                space+=" ";
+                final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+            }
+            pivot1++;
+            pivot2++;
+        }
+        else{
+            var pivot1_1 = pivot1+1;
+            var pivot2_2 = pivot2+1;
+            var string1 = arr1[pivot1];
+            var string2 = arr2[pivot2];
+        		while(true)
 				{
-					if(arr2[j] == arr1[pivot1+1])
-					{
-						flag = true;
-						break;
-					}
-					added_string+=arr2[j];
-					j++;
-						if(j>=arr2.length)
-							break;
+                    if(pivot2_2 >= arr2.length && pivot1_1 < arr1.length){
+                        final_string+=arr1.slice(pivot1_1, arr1.length).join("");
+                        final_string+="<pre style='background-color:green;>"+arr2[pivot2]+"</pre><pre style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</pre>";
+                        pivot1 = arr1.length;
+                        pivot2 = arr2.length;
+                            break;               
+                    }
+                    else if(pivot1_1 >= arr1.length && pivot2_2 < arr2.length){
+                        final_string+="<pre style='background-color:green;>"+arr2.slice(pivot2, arr2.length).join("")+"</pre><pre style='background-color:red;'>"+arr1[pivot1]+"</pre>";
+                        pivot1 = arr1.length;
+                        pivot2 = arr2.length;
+                        break;
+                    }
+                    else if(pivot1_1 >= arr1.length && pivot2_2 >= arr2.length){
+                        final_string+="<pre style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</pre><pre style='background-color:green;'>"+arr2.slice(pivot2, arr2.length).join("")+"</pre>";
+                        pivot1 = arr1.length;
+                        pivot2 = arr2.length;
+                        break;
+                    }   
+                    if(arr1[pivot1].trim() == arr2[pivot2_2].trim()){
+
+
+
+                        var space1 = arr1[pivot1].length - arr1[pivot1].trim().length;
+                        var space2 = arr2[pivot2_2].length - arr2[pivot2_2].trim().length;
+
+                        var space = "";
+                        if(space1 > space2){
+                           // final_string+=arr2[pivot2];
+                           final_string+="<pre style='background-color:green;'>"+string2+"</pre>"+arr2[pivot2_2];
+                            for(var i =0;i<space1 - space2;i++)
+                            space+=" ";
+                            final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+                        }
+                        else{
+                           // final_string+=arr1[pivot1];
+                           final_string+="<pre style='background-color:green;'>"+string2+"</pre>"+arr1[pivot1];
+                            for(var i =0;i<space2 - space1;i++)
+                            space+=" ";
+                            final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+                        }
+
+
+                       // final_string+="<pre style='background-color:green;'>"+string2+"</pre>"+arr2[pivot2_2];
+                        pivot1++
+                        pivot2 = pivot2_2+1;
+                        break;
+                    }              
+				    else if(arr2[pivot2].trim() == arr1[pivot1_1].trim())
+					{            
+
+                        var space1 = arr1[pivot1_1].length - arr1[pivot1_1].trim().length;
+                        var space2 = arr2[pivot2].length - arr2[pivot2].trim().length;
+
+                        var space = "";
+                        if(space1 > space2){
+                           // final_string+=arr2[pivot2];
+                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr2[pivot2];
+                            for(var i =0;i<space1 - space2;i++)
+                            space+=" ";
+                            final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+                        }
+                        else{
+                           // final_string+=arr1[pivot1];
+                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr1[pivot1_1];
+                            for(var i =0;i<space2 - space1;i++)
+                            space+=" ";
+                            final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+                        }
+
+
+
+
+
+
+                     //   final_string+= "<pre style='background-color:red;'>"+string1+"</pre>"+arr1[pivot1_1];
+                        pivot1 = pivot1_1+1;
+                        pivot2++;
+                        break;
+                    }
+                    else if(arr1[pivot1_1].trim() == arr2[pivot2_2].trim()){
+
+
+
+
+
+                        var space1 = arr1[pivot1_1].length - arr1[pivot1_1].trim().length;
+                        var space2 = arr2[pivot2_2].length - arr2[pivot2_2].trim().length;
+
+                        var space = "";
+                        if(space1 > space2){
+                           // final_string+=arr2[pivot2];
+                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr2[pivot2_2];
+                            for(var i =0;i<space1 - space2;i++)
+                            space+=" ";
+                            final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+                        }
+                        else{
+                           // final_string+=arr1[pivot1];
+                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr1[pivot1_1];
+                            for(var i =0;i<space2 - space1;i++)
+                            space+=" ";
+                            final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+                        }
+
+
+
+
+
+
+
+                      //  final_string+=  "<pre style='background-color:red;'>"+string1+"</pre><pre style='background-color:green;'>"+string2+"</pre>"+arr2[pivot2_2];
+                        pivot1 = pivot1_1+1;
+                        pivot2 = pivot2_2+1;
+                        break;
+                    }   
+                        else{
+                            for(var i=pivot1+1,j=pivot2+1;i<pivot1_1,j<pivot2_2;i++,j++){
+                                if(arr1[i].trim() == arr2[pivot2_2].trim()){
+                                    final_string+= "<pre style='background-color:red;>"+arr1.slice(pivot1, i).join("")+"</pre><pre style='background-color:green;'>"+arr2.slice(pivot2, pivot2_2).join("")+"</pre>";
+                                    pivot1 = i+1;
+                                    pivot2 = pivot2_2+1;
+                                    break;
+                                }
+                                if(arr2[j].trim() == arr1[pivot1_1].trim()){
+                                    final_string+= "<pre style='background-color:red;>"+arr1.slice(pivot1, pivot1_1).join("")+"</pre><pre style='background-color:green;'>"+arr2.slice(pivot2, j).join("")+"</pre>";
+                                    pivot1 = j+1;
+                                    pivot2 = pivot1_1+1;
+                                    break;
+                                }
+                            }
+                            string1+=arr1[pivot1_1];
+                            string2+=arr2[pivot2_2];
+                            pivot1_1++;
+                            pivot2_2++;
+                    }
+
+						
 				}
-					if(flag){
-			final_string+="<pre style='background-color:red;'>"+arr1[pivot1]+"</pre><pre style='background-color:green;'>"+added_string+"</pre>";
-			pivot1++;
-			pivot2 = j;
-					}
-		else if(j<arr2.length){
-			final_string+="<pre style='background-color:green;'>"+added_string+"</pre>"+arr1[pivot1];
-			pivot1++;
-			pivot2 = j+1;
-		}	
-	else{
-			final_string+="<pre style='background-color:red;'>"+arr1[pivot1]+"</pre>";
-			pivot1++;
-	}	
-	
-	}
-	
-	
-	}
+
+        }
+    
+    }
+    
+    
 }
-if(pivot1 >=arr1.length){
-			for(var k=pivot2;k<arr2.length;k++){
-				final_string+="<pre style='background-color:green'>"+arr2[k]+"</pre>";
-			}
-			
-		}
-		else if(pivot2 >=arr2.length){
-			for(var k=pivot1;k<arr1.length;k++){
-				final_string+="<pre style='background-color:red'>"+arr2[k]+"</pre>";
-			}
-		}
-document.getElementById('text').innerHTML = '<p>'+final_string.trim()+'</p>';
+
+document.getElementById('text').innerHTML = '<pre>'+final_string.trim()+'</pre>';
 }
 </script>
 <style>
