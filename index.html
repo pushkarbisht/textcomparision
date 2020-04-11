@@ -20,8 +20,8 @@ function convert(){
 	var arr1 = [];
 var arr2 = [];
 
-var splittedString1 = text1.split(/(\s+|\.+\s*|\?+\s*|\,+\s*|\"+\s*|\n+)/);
-var splittedString2 = text2.split(/(\s+|\.+\s*|\?+\s*|\,+\s*|\"+\s*|\n+)/);
+var splittedString1 = text1.split(/(\s+|\.+\s*|\?+\s*|\,+\s*|\"+\s*|\n+|\(+|\)+)/);
+var splittedString2 = text2.split(/(\s+|\.+\s*|\?+\s*|\,+\s*|\"+\s*|\n+|\(+|\)+)/);
 
 var newArr1 = splittedString1.map((currentValue, index, arr)=>{
     if(currentValue.trim() == '' && currentValue != '\n')
@@ -70,15 +70,15 @@ var pivot1 =0;
 var pivot2 =0;
 
 while(true){
-  //  if(arr1.length == 1)
+
     if(pivot1>=arr1.length){
         if(pivot2<arr2.length)
-        final_string+="<pre style='background-color:green;'>"+arr2.slice(pivot2, arr2.length).join("")+"</pre>";
+        final_string+="<span style='background-color:green;'>"+arr2.slice(pivot2, arr2.length).join("")+"</span>";
         break;
     }
     if(pivot2>=arr2.length){
         if(pivot1<arr1.length)
-        final_string+="<pre style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</pre>";
+        final_string+="<span style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</span>";
         break;
     }
 	if(arr1[pivot1] == arr2[pivot2]){
@@ -95,13 +95,13 @@ while(true){
                 final_string+=arr2[pivot2];
                 for(var i =0;i<space1 - space2;i++)
                 space+=" ";
-                final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+                final_string+="<span style='background-color:red;'>"+space+"</span>";
             }
             else{
                 final_string+=arr1[pivot1];
                 for(var i =0;i<space2 - space1;i++)
                 space+=" ";
-                final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+                final_string+="<span style='background-color:green;'>"+space+"</span>";
             }
             pivot1++;
             pivot2++;
@@ -115,19 +115,19 @@ while(true){
 				{
                     if(pivot2_2 >= arr2.length && pivot1_1 < arr1.length){
                         final_string+=arr1.slice(pivot1_1, arr1.length).join("");
-                        final_string+="<pre style='background-color:green;>"+arr2[pivot2]+"</pre><pre style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</pre>";
+                        final_string+="<span style='background-color:green;>"+arr2[pivot2]+"</span><span style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</span>";
                         pivot1 = arr1.length;
                         pivot2 = arr2.length;
                             break;               
                     }
                     else if(pivot1_1 >= arr1.length && pivot2_2 < arr2.length){
-                        final_string+="<pre style='background-color:green;>"+arr2.slice(pivot2, arr2.length).join("")+"</pre><pre style='background-color:red;'>"+arr1[pivot1]+"</pre>";
+                        final_string+="<span style='background-color:green;>"+arr2.slice(pivot2, arr2.length).join("")+"</span><span style='background-color:red;'>"+arr1[pivot1]+"</span>";
                         pivot1 = arr1.length;
                         pivot2 = arr2.length;
                         break;
                     }
                     else if(pivot1_1 >= arr1.length && pivot2_2 >= arr2.length){
-                        final_string+="<pre style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</pre><pre style='background-color:green;'>"+arr2.slice(pivot2, arr2.length).join("")+"</pre>";
+                        final_string+="<span style='background-color:red;'>"+arr1.slice(pivot1, arr1.length).join("")+"</span><span style='background-color:green;'>"+arr2.slice(pivot2, arr2.length).join("")+"</span>";
                         pivot1 = arr1.length;
                         pivot2 = arr2.length;
                         break;
@@ -142,17 +142,17 @@ while(true){
                         var space = "";
                         if(space1 > space2){
                            // final_string+=arr2[pivot2];
-                           final_string+="<pre style='background-color:green;'>"+string2+"</pre>"+arr2[pivot2_2];
+                           final_string+="<span style='background-color:green;'>"+string2+"</span>"+arr2[pivot2_2];
                             for(var i =0;i<space1 - space2;i++)
                             space+=" ";
-                            final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+                            final_string+="<span style='background-color:red;'>"+space+"</span>";
                         }
                         else{
                            // final_string+=arr1[pivot1];
-                           final_string+="<pre style='background-color:green;'>"+string2+"</pre>"+arr1[pivot1];
+                           final_string+="<span style='background-color:green;'>"+string2+"</span>"+arr1[pivot1];
                             for(var i =0;i<space2 - space1;i++)
                             space+=" ";
-                            final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+                            final_string+="<span style='background-color:green;'>"+space+"</span>";
                         }
 
 
@@ -170,17 +170,17 @@ while(true){
                         var space = "";
                         if(space1 > space2){
                            // final_string+=arr2[pivot2];
-                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr2[pivot2];
+                           final_string+="<span style='background-color:red;'>"+string1+"</span>"+arr2[pivot2];
                             for(var i =0;i<space1 - space2;i++)
                             space+=" ";
-                            final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+                            final_string+="<span style='background-color:red;'>"+space+"</span>";
                         }
                         else{
                            // final_string+=arr1[pivot1];
-                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr1[pivot1_1];
+                           final_string+="<span style='background-color:red;'>"+string1+"</span>"+arr1[pivot1_1];
                             for(var i =0;i<space2 - space1;i++)
                             space+=" ";
-                            final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+                            final_string+="<span style='background-color:green;'>"+space+"</span>";
                         }
 
 
@@ -205,17 +205,17 @@ while(true){
                         var space = "";
                         if(space1 > space2){
                            // final_string+=arr2[pivot2];
-                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr2[pivot2_2];
+                           final_string+="<span style='background-color:green;'>"+string1+"</span><span style='background-color:red;'>"+string2+"</span>"+arr2[pivot2_2];
                             for(var i =0;i<space1 - space2;i++)
                             space+=" ";
-                            final_string+="<pre style='background-color:red;'>"+space+"</pre>";
+                            final_string+="<span style='background-color:red;'>"+space+"</span>";
                         }
                         else{
                            // final_string+=arr1[pivot1];
-                           final_string+="<pre style='background-color:green;'>"+string1+"</pre>"+arr1[pivot1_1];
+                           final_string+="<span style='background-color:green;'>"+string1+"</span><span style='background-color:red;'>"+string2+"</span>"+arr1[pivot1_1];
                             for(var i =0;i<space2 - space1;i++)
                             space+=" ";
-                            final_string+="<pre style='background-color:green;'>"+space+"</pre>";
+                            final_string+="<span style='background-color:green;'>"+space+"</span>";
                         }
 
 
@@ -232,13 +232,13 @@ while(true){
                         else{
                             for(var i=pivot1+1,j=pivot2+1;i<pivot1_1,j<pivot2_2;i++,j++){
                                 if(arr1[i].trim() == arr2[pivot2_2].trim()){
-                                    final_string+= "<pre style='background-color:red;>"+arr1.slice(pivot1, i).join("")+"</pre><pre style='background-color:green;'>"+arr2.slice(pivot2, pivot2_2).join("")+"</pre>";
+                                    final_string+= "<span style='background-color:red;>"+arr1.slice(pivot1, i).join("")+"</span><span style='background-color:green;'>"+arr2.slice(pivot2, pivot2_2).join("")+"</span>";
                                     pivot1 = i+1;
                                     pivot2 = pivot2_2+1;
                                     break;
                                 }
                                 if(arr2[j].trim() == arr1[pivot1_1].trim()){
-                                    final_string+= "<pre style='background-color:red;>"+arr1.slice(pivot1, pivot1_1).join("")+"</pre><pre style='background-color:green;'>"+arr2.slice(pivot2, j).join("")+"</pre>";
+                                    final_string+= "<span style='background-color:red;>"+arr1.slice(pivot1, pivot1_1).join("")+"</span><span style='background-color:green;'>"+arr2.slice(pivot2, j).join("")+"</span>";
                                     pivot1 = j+1;
                                     pivot2 = pivot1_1+1;
                                     break;
@@ -265,6 +265,11 @@ document.getElementById('text').innerHTML = '<pre>'+final_string.trim()+'</pre>'
 </script>
 <style>
 	pre{
-		display: inline;
+		 overflow-x: auto;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
 	}
 </style>
