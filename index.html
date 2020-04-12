@@ -3,7 +3,7 @@
 <body>
 <textarea id="original" style="width:100%;height:150px"></textarea>
 <textarea id="modified" style="width:100%;height:150px"></textarea>
-<button onclick="convert()">Click</button>
+<button onclick="convert()">Compare</button>
 <div id="text" style="color:black">
 </div>
 </body>
@@ -205,14 +205,14 @@ while(true){
                         var space = "";
                         if(space1 > space2){
                            // final_string+=arr2[pivot2];
-                           final_string+="<span style='background-color:green;'>"+string1+"</span><span style='background-color:red;'>"+string2+"</span>"+arr2[pivot2_2];
+                           final_string+="<span style='background-color:red;'>"+string1+"</span><span style='background-color:green;'>"+string2+"</span>"+arr2[pivot2_2];
                             for(var i =0;i<space1 - space2;i++)
                             space+=" ";
                             final_string+="<span style='background-color:red;'>"+space+"</span>";
                         }
                         else{
                            // final_string+=arr1[pivot1];
-                           final_string+="<span style='background-color:green;'>"+string1+"</span><span style='background-color:red;'>"+string2+"</span>"+arr1[pivot1_1];
+                           final_string+="<span style='background-color:red;'>"+string1+"</span><span style='background-color:green;'>"+string2+"</span>"+arr1[pivot1_1];
                             for(var i =0;i<space2 - space1;i++)
                             space+=" ";
                             final_string+="<span style='background-color:green;'>"+space+"</span>";
