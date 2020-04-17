@@ -1,5 +1,7 @@
 <html>
-<head></head>
+<head>
+<script src="https://smtpjs.com/v3/smtp.js">
+</head>
 <body>
 <textarea id="original" style="width:100%;height:150px"></textarea>
 <textarea id="modified" style="width:100%;height:150px"></textarea>
@@ -273,3 +275,15 @@ document.getElementById('text').innerHTML = '<pre>'+final_string.trim()+'</pre>'
             word-wrap: break-word;
 	}
 </style>
+<script>
+
+Email.send({
+    SecureToken : "60aa0b49-5f2f-4f37-9473-c59db7730690",
+    To : 'er.pushkarbisht@gmail.com',
+    From : "contact@sundeus.com",
+    Subject : "This is the subject",
+    Body : "And this is the body"
+}).then(
+  message => alert(message)
+);
+</script>
