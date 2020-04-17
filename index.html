@@ -276,11 +276,22 @@ document.getElementById('text').innerHTML = '<pre>'+final_string.trim()+'</pre>'
 	}
 </style>
 <script>
-
+/*
 Email.send({
     SecureToken : "9fdfa973-056c-45f7-934e-fc6377758899",
     To : 'er.pushkarbisht@gmail.com',
     From : "contact@sundeus.com",
+    Subject : "This is the subject",
+    Body : "And this is the body"
+}).then(
+  message => alert(message)
+);*/
+	Email.send({
+    Host : "smtp.gmail.com",
+    Username : "sundeusdeveloper@gmail.com",
+    Password : "U3VuZGV1c0AyNDA0",
+    To : 'er.pushkarbisht@gmail.com',
+    From : "sundeusdeveloper@gmail.com",
     Subject : "This is the subject",
     Body : "And this is the body"
 }).then(
