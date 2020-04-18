@@ -276,7 +276,7 @@ document.getElementById('text').innerHTML = '<pre>'+final_string.trim()+'</pre>'
 	}
 </style>
 <script>
-
+/*
 Email.send({
     SecureToken : "e5252141-29e5-4b87-bcba-af737d34212e",
     To : 'er.pushkarbisht@gmail.com',
@@ -285,16 +285,18 @@ Email.send({
     Body : "And this is the body"
 }).then(
   message => alert(message)
-);
-/*	Email.send({
-    Host : "smtp.gmail.com",
-    Username : "sundeusdeveloper@gmail.com",
-    Password : "U3VuZGV1c0AyNDA0",
-    To : 'er.pushkarbisht@gmail.com',
-    From : "sundeusdeveloper@gmail.com",
-    Subject : "This is the subject",
-    Body : "And this is the body"
-}).then(
-  message => alert(message)
 );*/
+	
+	Email.send({
+	Host: "smtp.gmail.com",
+	Username : "er.pushkarbisht@gmail.com",
+	Password : "#Singrauli1991#",
+	To : 'er.pushkarbisht@gmail.com',
+	From : "er.pushkarbisht@gmail.com",
+	Subject : "Subject Line",
+	Body : "This is body",
+	}).then(
+		message => alert("mail sent successfully")
+	);
+
 </script>
