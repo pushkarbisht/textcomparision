@@ -15,9 +15,7 @@ function sendmail(){
 	To : 'er.pushkarbisht@gmail.com',
 	From : "sundeusconsulting@gmail.com",
 	Subject : "Subject Line",
-	Body : `This is body \n </br> 
-
-wline`,
+	Body : `This is body \r\n \0 wline`,
 	}).then(
 		message => alert("mail sent successfully")
 	);
