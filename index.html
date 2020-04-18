@@ -1,6 +1,6 @@
 <html>
 <head>
-<script src="https://smtpjs.com/v3/smtp.js">
+
 </head>
 <body>
 <textarea id="original" style="width:100%;height:150px"></textarea>
@@ -275,28 +275,4 @@ document.getElementById('text').innerHTML = '<pre>'+final_string.trim()+'</pre>'
             word-wrap: break-word;
 	}
 </style>
-<script>
-/*
-Email.send({
-    SecureToken : "e5252141-29e5-4b87-bcba-af737d34212e",
-    To : 'er.pushkarbisht@gmail.com',
-    From : "er.pushkarbisht@gmail.com",
-    Subject : "This is the subject",
-    Body : "And this is the body"
-}).then(
-  message => alert(message)
-);*/
-	
-	Email.send({
-	Host: "smtp.gmail.com",
-	Username : "er.pushkarbisht@gmail.com",
-	Password : "#Singrauli1991#",
-	To : 'er.pushkarbisht@gmail.com',
-	From : "er.pushkarbisht@gmail.com",
-	Subject : "Subject Line",
-	Body : "This is body",
-	}).then(
-		message => alert("mail sent successfully")
-	);
 
-</script>
