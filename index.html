@@ -47,8 +47,10 @@ var newArr1 = splittedString1.map((currentValue, index, arr)=>{
 var newArr2 = splittedString2.map((currentValue, index, arr)=>{
     
     
-    if(currentValue.trim() == '' && currentValue != '\n')
+ /*R3*/
+ if(currentValue.trim() == '' && currentValue != '\n')
     return null;
+/*M2*/
     if(index == arr.length-1){
         return currentValue
     } 
