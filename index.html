@@ -95,14 +95,14 @@ while(true){
 		pivot2++;	
 	}
 	else{
+/*R1*/
+/*R2M1*/
         if(arr1[pivot1].trim() == arr2[pivot2].trim()){
             var space1 = arr1[pivot1].length - arr1[pivot1].trim().length;
             var space2 = arr2[pivot2].length - arr2[pivot2].trim().length;
             var space = "";
             if(space1 > space2){
                 final_string+=arr2[pivot2];
-/*R1*/
-/*R2*/
                 for(var i =0;i<space1 - space2;i++)
                 space+=" ";
                 final_string+="<span style='background-color:red;'>"+space+"</span>";
